@@ -1,0 +1,23 @@
+name: Demo CI
+
+on: [push]
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt || true
+      - name: Syntax check
+        run: |
+          python -m py_compile app/*.py
+      - name: Build Docker image
+        run: docker build --no-cache -t rag-agent:demo .
