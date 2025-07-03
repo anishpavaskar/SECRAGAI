@@ -1,1 +1,16 @@
 
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: rag-ingest
+spec:
+  schedule: "0 */6 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: ingest
+            image: <your-registry>/ma-rag-agent-demo:latest
+            command: ["python", "-c", "from app.ingestion import run; run()"]
+          restartPolicy: OnFailure
