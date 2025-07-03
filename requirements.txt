@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+langchain
+openai
+pydantic
+kubernetes
+faiss-cpu
